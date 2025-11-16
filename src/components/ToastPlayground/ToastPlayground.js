@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from '../Button';
 
@@ -7,6 +7,9 @@ import styles from './ToastPlayground.module.css';
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
+  const [textMessage, setTextMessage] = useState('')
+  const [variantSelected, setVariantSelected] = useState(VARIANT_OPTIONS[0])
+
   return (
     <div className={styles.wrapper}>
       <header>
@@ -24,27 +27,45 @@ function ToastPlayground() {
             Message
           </label>
           <div className={styles.inputWrapper}>
-            <textarea id="message" className={styles.messageInput} />
+            <textarea
+              id="message"
+              className={styles.messageInput}
+              value={textMessage}
+              onChange={event => {
+                setTextMessage(event.target.value)
+              }}
+            />
           </div>
         </div>
 
         <div className={styles.row}>
           <div className={styles.label}>Variant</div>
+
           <div
+            key={option}
             className={`${styles.inputWrapper} ${styles.radioWrapper}`}
           >
-            <label htmlFor="variant-notice">
-              <input
-                id="variant-notice"
-                type="radio"
-                name="variant"
-                value="notice"
-              />
-              notice
-            </label>
+            {VARIANT_OPTIONS.map(option => {
+              const id = `variant-${option}`
+              return (
 
-            {/* TODO Other Variant radio buttons here */}
+                <label htmlFor={id}>
+                  <input
+                    id={id}
+                    type="radio"
+                    name="variant"
+                    checked={option === variantSelected}
+                    value={option}
+                    onChange={event => {
+                      setVariantSelected(event.target.value)
+                    }}
+                  />
+                  {option}
+                </label>
+              )
+            })}
           </div>
+
         </div>
 
         <div className={styles.row}>
