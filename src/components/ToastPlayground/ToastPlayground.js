@@ -42,7 +42,6 @@ function ToastPlayground() {
           <div className={styles.label}>Variant</div>
 
           <div
-            key={option}
             className={`${styles.inputWrapper} ${styles.radioWrapper}`}
           >
             {VARIANT_OPTIONS.map(option => {
