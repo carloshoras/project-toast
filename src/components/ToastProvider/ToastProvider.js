@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { use } from 'react';
+import { useState } from 'react';
+import useEscapeKey from '../../hooks/use-escape-key';
 
 export const ToastContext = React.createContext();
-import { useState } from 'react';
 
 
 function ToastProvider({ children }) {
-
-
   const [toasts, setToasts] = useState([])
-
-  
 
   function createToast(message, variantSelected) {
     const nextToasts = [...toasts, { message: message, variant: variantSelected, id: crypto.randomUUID() }]
     setToasts(nextToasts)
   }
+
   function handleDismissToast(id) {
     const nextToasts = toasts.filter(toast => toast.id !== id)
     setToasts(nextToasts)
   }
+
+  useEscapeKey(() => setToasts([]));
 
   const value = {
     toasts,
